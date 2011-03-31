@@ -1,0 +1,3 @@
+Python syntax file for Vim editor.
+Based on Dmitry Vasiliev's python.vim (http://www.hlabs.spb.ru/vim/python.vim) 
+with indent highlighting inspired by Max E. Kuznecov (https://github.com/syhpoon)
