@@ -111,7 +111,7 @@ if exists("python_highlight_all") && python_highlight_all != 0
     let python_highlight_doctests = 1
   endif
   " Indents highlight
-  if !exists("let python_highlight_indents")
+  if !exists("python_highlight_indents")
     let python_highlight_indents = 1
   endif
 endif
@@ -164,7 +164,7 @@ if exists("python_highlight_space_errors") && python_highlight_space_errors != 0
 endif
 
 " Indents highlight
-if exists("python_highlight_indents")
+if exists("python_highlight_indents") && python_highlight_indents != 0
   syn match   pythonHLIndent    /^\t\{1}/
   syn match   pythonHLIndent1   /\(^\t\{1}\)\@<=\t\{1}/
   syn match   pythonHLIndent2   /\(^\t\{2}\)\@<=\t\{1}/
