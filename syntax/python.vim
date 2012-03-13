@@ -113,6 +113,9 @@ if exists("python_highlight_all") && python_highlight_all != 0
   " Indents highlight
   if !exists("python_highlight_indents")
     let python_highlight_indents = 1
+    if !exists("python_indents_style")
+        let python_indents_style = 1
+    endif
   endif
 endif
 
@@ -165,29 +168,18 @@ endif
 
 " Indents highlight
 if exists("python_highlight_indents") && python_highlight_indents != 0
-  syn match   pythonHLIndent    /^\t\{1}/
-  syn match   pythonHLIndent1   /\(^\t\{1}\)\@<=\t\{1}/
-  syn match   pythonHLIndent2   /\(^\t\{2}\)\@<=\t\{1}/
-  syn match   pythonHLIndent3   /\(^\t\{3}\)\@<=\t\{1}/
-  syn match   pythonHLIndent4   /\(^\t\{4}\)\@<=\t\{1}/
-  syn match   pythonHLIndent5   /\(^\t\{5}\)\@<=\t\{1}/
-  syn match   pythonHLIndent6   /\(^\t\{6}\)\@<=\t\{1}/
-  syn match   pythonHLIndent7   /\(^\t\{7}\)\@<=\t\{1}/
-  syn match   pythonHLIndent8   /\(^\t\{8}\)\@<=\t\{1}/
-  syn match   pythonHLIndent9   /\(^\t\{9}\)\@<=\t\{1}/
-  syn match   pythonHLIndent10  /\(^\t\{10}\)\@<=\t\{1}/
-  " whitespaces
+  " whitespaces (pep8, guys!)
   syn match   pythonHLSpace     /\(^\ \{4}\)\{1}/
-  syn match   pythonHLSpace1    /\(\(^\ \{4}\)\)\@<=\(\ \{4}\)\{1}/
-  syn match   pythonHLSpace2    /\(\(^\ \{8}\)\)\@<=\(\ \{4}\)\{1}/
-  syn match   pythonHLSpace3    /\(\(^\ \{12}\)\)\@<=\(\ \{4}\)\{1}/
-  syn match   pythonHLSpace4    /\(\(^\ \{16}\)\)\@<=\(\ \{4}\)\{1}/
-  syn match   pythonHLSpace5    /\(\(^\ \{20}\)\)\@<=\(\ \{4}\)\{1}/
-  syn match   pythonHLSpace6    /\(\(^\ \{24}\)\)\@<=\(\ \{4}\)\{1}/
-  syn match   pythonHLSpace7    /\(\(^\ \{28}\)\)\@<=\(\ \{4}\)\{1}/
-  syn match   pythonHLSpace8    /\(\(^\ \{32}\)\)\@<=\(\ \{4}\)\{1}/
-  syn match   pythonHLSpace9    /\(\(^\ \{36}\)\)\@<=\(\ \{4}\)\{1}/
-  syn match   pythonHLSpace10    /\(\(^\ \{40}\)\)\@<=\(\ \{4}\)\{1}/
+  for i in range(1, 30)
+    let pattern='/\(\(^\ \{'.i*4.'}\)\)\@<=\(\ \{4}\)\{1}/'
+    exec 'syn match pythonHLSpace'.i pattern
+  endfor
+  " tabs
+  syn match   pythonHLTab    /^\t\{1}/
+  for i in range(1, 30)
+    let pattern='/\(^\t\{'.i.'}\)\@<=\t\{1}/'
+    exec 'syn match pythonHLTab'.i pattern
+  endfor
 endif
 
 " Strings
@@ -401,29 +393,61 @@ if version >= 508 || !exists("did_python_syn_inits")
 
   " Indents highlight
   if exists("python_highlight_indents")
-    HiLink pythonHLIndent       DiffChange
-    HiLink pythonHLIndent1      Cursor
-    HiLink pythonHLIndent2      StatusLine
-    HiLink pythonHLIndent3      Todo
-    HiLink pythonHLIndent4      Visual
-    HiLink pythonHLIndent5      DiffChange
-    HiLink pythonHLIndent6      Cursor
-    HiLink pythonHLIndent7      StatusLine
-    HiLink pythonHLIndent8      Todo
-    HiLink pythonHLIndent9      Visual
-    HiLink pythonHLIndent10     DiffChange
+    if (python_indents_style == 1)
+    " 5 colors
+    HiLink pythonHLTab       DiffChange
+    HiLink pythonHLTab1      Cursor
+    HiLink pythonHLTab2      StatusLine
+    HiLink pythonHLTab3      Todo
+    HiLink pythonHLTab4      Visual
+    HiLink pythonHLTab5      DiffChange
+    HiLink pythonHLTab6      Cursor
+    HiLink pythonHLTab7      StatusLine
+    HiLink pythonHLTab8      Todo
+    HiLink pythonHLTab9      Visual
+    HiLink pythonHLTab10     DiffChange
 
-    HiLink pythonHLSpace        DiffChange
-    HiLink pythonHLSpace1       Cursor
-    HiLink pythonHLSpace2       StatusLine
-    HiLink pythonHLSpace3       Todo
-    HiLink pythonHLSpace4       Visual
-    HiLink pythonHLSpace5       DiffChange
-    HiLink pythonHLSpace6       Cursor
-    HiLink pythonHLSpace7       StatusLine
-    HiLink pythonHLSpace8       Todo
-    HiLink pythonHLSpace9       Visual
-    HiLink pythonHLSpace10      DiffChange
+    HiLink pythonHLStab      DiffChange
+    HiLink pythonHLStab1     Cursor
+    HiLink pythonHLStab2     StatusLine
+    HiLink pythonHLStab3     Todo
+    HiLink pythonHLStab4     Visual
+    HiLink pythonHLStab5     DiffChange
+    HiLink pythonHLStab6     Cursor
+    HiLink pythonHLStab7     StatusLine
+    HiLink pythonHLStab8     Todo
+    HiLink pythonHLStab9     Visual
+    HiLink pythonHLStab10    DiffChange
+
+    HiLink pythonHLSpace     DiffChange
+    HiLink pythonHLSpace1    Cursor
+    HiLink pythonHLSpace2    StatusLine
+    HiLink pythonHLSpace3    Todo
+    HiLink pythonHLSpace4    Visual
+    HiLink pythonHLSpace5    DiffChange
+    HiLink pythonHLSpace6    Cursor
+    HiLink pythonHLSpace7    StatusLine
+    HiLink pythonHLSpace8    Todo
+    HiLink pythonHLSpace9    Visual
+    HiLink pythonHLSpace10   DiffChange
+
+    elseif (python_indents_style == 2)
+    " 2 colors
+    HiLink pythonHLSpace     StatusLineNC
+    HiLink pythonHLTab       StatusLineNC
+    for i in range(1, 30)
+      if i % 2 == 0
+        exec 'HiLink pythonHLSpace' .i. ' StatusLineNC'
+        exec 'HiLink pythonHLTab' .i. ' StatusLineNC'
+      else
+        exec 'HiLink pythonHLSpace' .i. ' PmenuSel'
+        exec 'HiLink pythonHLTab' .i. ' PmenuSel'
+      endif
+    endfor
+
+    else
+      echoe "python-syntax: No such indentation style '". python_indents_style ."' - use 1 or 2"
+    endif
   endif
 
   delcommand HiLink
