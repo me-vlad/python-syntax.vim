@@ -392,7 +392,7 @@ if version >= 508 || !exists("did_python_syn_inits")
   HiLink pythonExClass	Structure
 
   " Indents highlight
-  if exists("python_highlight_indents")
+  if exists("python_highlight_indents") && python_highlight_indents != 0
     if (python_indents_style == 1)
     " 5 colors
     HiLink pythonHLTab       DiffChange
